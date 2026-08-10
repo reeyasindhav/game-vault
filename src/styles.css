@@ -202,5 +202,68 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, .display {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+
+  ::selection {
+    background: var(--neon);
+    color: var(--primary-foreground);
+  }
+
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: var(--background); }
+  ::-webkit-scrollbar-thumb {
+    background: var(--surface-2);
+    border-radius: 999px;
+    border: 2px solid var(--background);
+  }
+  ::-webkit-scrollbar-thumb:hover { background: var(--neon-dim); }
+}
+
+@utility label-mono {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+@utility panel {
+  background:
+    linear-gradient(180deg, color-mix(in oklab, var(--surface) 92%, transparent), var(--background));
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+@utility neon-ring {
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--neon) 40%, transparent),
+    0 0 24px -6px color-mix(in oklab, var(--neon) 55%, transparent);
+}
+
+@utility neon-text {
+  color: var(--neon);
+  text-shadow: 0 0 18px color-mix(in oklab, var(--neon) 45%, transparent);
+}
+
+@utility grid-bg {
+  background-image:
+    linear-gradient(color-mix(in oklab, var(--neon) 8%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in oklab, var(--neon) 8%, transparent) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+
+@utility hover-lift {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 24px 60px -24px color-mix(in oklab, var(--neon) 45%, transparent);
+  }
   }
 }
