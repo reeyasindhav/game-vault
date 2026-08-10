@@ -11,6 +11,17 @@ import {
   UserRound,
   X,
 } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { useVault } from "@/lib/vault-store";
 
 const NAV = [
@@ -25,6 +36,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   const { user, ready, backlog, signOut } = useVault();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const [confirmOpen, setConfirmOpen] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   useEffect(() => {
@@ -101,16 +113,36 @@ export function AppShell({ children }: { children: ReactNode }) {
             >
               <UserRound size={18} />
             </Link>
-            <button
-              onClick={() => {
-                signOut();
-                navigate({ to: "/login", replace: true });
-              }}
-              aria-label="Sign out"
-              className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-border text-muted-foreground transition-colors hover:border-destructive/50 hover:text-destructive"
-            >
-              <LogOut size={16} />
-            </button>
+            <AlertDialog open={confirmOpen} onOpenChange={setConfirmOpen}>
+              <AlertDialogTrigger asChild>
+                <button
+                  aria-label="Sign out"
+                  className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-border text-muted-foreground transition-colors hover:border-destructive/50 hover:text-destructive"
+                >
+                  <LogOut size={16} />
+                </button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Sign out of Gamevault?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    You will be returned to the login screen. Your backlog and progress will be here
+                    when you sign back in.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={() => {
+                      signOut();
+                      navigate({ to: "/login", replace: true });
+                    }}
+                  >
+                    Sign out
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </div>
         </header>
 
@@ -164,9 +196,27 @@ export function AppShell({ children }: { children: ReactNode }) {
           <main className="min-w-0 flex-1">{children}</main>
         </div>
 
-        <footer className="mt-12 flex flex-wrap items-center justify-between gap-2 border-t border-border pt-6">
-          <span className="label-mono">GV_OS v2.4.1 / All systems nominal</span>
-          <span className="label-mono">Press / to search</span>
+        <footer className="mt-12 flex flex-col gap-4 border-t border-border pt-6 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex flex-wrap items-center gap-4">
+            <span className="label-mono">GV_OS v2.4.1</span>
+            <span className="label-mono text-muted-foreground">/</span>
+            <span className="label-mono text-muted-foreground">All systems nominal</span>
+          </div>
+          <div className="flex items-center gap-6">
+            <Link
+              to="/terms"
+              className="label-mono text-xs text-muted-foreground transition-colors hover:text-neon"
+            >
+              Terms
+            </Link>
+            <Link
+              to="/privacy"
+              className="label-mono text-xs text-muted-foreground transition-colors hover:text-neon"
+            >
+              Privacy
+            </Link>
+            <span className="label-mono !text-[10px] text-muted-foreground">Press / to search</span>
+          </div>
         </footer>
       </div>
     </div>

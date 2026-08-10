@@ -1,15 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import {
-  ArrowRight,
-  ArrowUpRight,
-  Bookmark,
-  Gamepad2,
-  Sparkles,
-  Star,
-  Trophy,
-} from "lucide-react";
+import { ArrowRight, ArrowUpRight, Bookmark, Gamepad2, Wand2, Star, Trophy } from "lucide-react";
 import { GAMES } from "@/lib/games";
-
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
@@ -36,7 +27,7 @@ const FEATURES = [
     body: "Every unplayed title from every console in one queue, sorted by how likely you are to actually finish it.",
   },
   {
-    icon: Sparkles,
+    icon: Wand2,
     title: "Taste-mapped picks",
     body: "Your verdicts build a live taste map. The more you rate, the sharper the recommendations get.",
   },
@@ -95,8 +86,8 @@ function Landing() {
           className="animate-fade-up mt-6 max-w-xl text-lg text-muted-foreground"
           style={{ animationDelay: "120ms" }}
         >
-          Gamers play everywhere and remember nothing. Gamevault pulls every platform into one
-          shelf — so you can track the backlog, log honest verdicts, and find what to play tonight.
+          Gamers play everywhere and remember nothing. Gamevault pulls every platform into one shelf
+          — so you can track the backlog, log honest verdicts, and find what to play tonight.
         </p>
 
         <div
@@ -203,9 +194,22 @@ function Landing() {
         </div>
       </section>
 
-      <footer className="relative mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 border-t border-border px-5 py-8 sm:px-8">
-        <span className="label-mono">© 2026 Gamevault / All systems nominal</span>
-        <span className="label-mono">Built for players who finish things</span>
+      <footer className="relative mx-auto max-w-7xl border-t border-border px-5 py-10 sm:px-8">
+        <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+          <div className="space-y-1">
+            <span className="label-mono">© 2026 Gamevault</span>
+            <p className="text-xs text-muted-foreground">Built for players who finish things</p>
+          </div>
+          <div className="flex flex-wrap items-center gap-6">
+            <Link to="/terms" className="label-mono text-xs transition-colors hover:text-neon">
+              Terms of Service
+            </Link>
+            <Link to="/privacy" className="label-mono text-xs transition-colors hover:text-neon">
+              Privacy Policy
+            </Link>
+            <span className="label-mono !text-[10px] text-muted-foreground">v2.4.1</span>
+          </div>
+        </div>
       </footer>
     </div>
   );

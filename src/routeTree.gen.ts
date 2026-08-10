@@ -14,9 +14,11 @@ import { Route as ActivityRouteImport } from './routes/activity'
 import { Route as BacklogRouteImport } from './routes/backlog'
 import { Route as DiscoverRouteImport } from './routes/discover'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SignupRouteImport } from './routes/signup'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as GameIdRouteImport } from './routes/game.$id'
 
 const IndexRoute = IndexRouteImport.update({
@@ -44,6 +46,11 @@ const LoginRoute = LoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProfileRoute = ProfileRouteImport.update({
   id: '/profile',
   path: '/profile',
@@ -59,6 +66,11 @@ const SignupRoute = SignupRouteImport.update({
   path: '/signup',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const GameIdRoute = GameIdRouteImport.update({
   id: '/game/$id',
   path: '/game/$id',
@@ -71,9 +83,11 @@ export interface FileRoutesByFullPath {
   '/backlog': typeof BacklogRoute
   '/discover': typeof DiscoverRoute
   '/login': typeof LoginRoute
+  '/privacy': typeof PrivacyRoute
   '/profile': typeof ProfileRoute
   '/settings': typeof SettingsRoute
   '/signup': typeof SignupRoute
+  '/terms': typeof TermsRoute
   '/game/$id': typeof GameIdRoute
 }
 export interface FileRoutesByTo {
@@ -82,9 +96,11 @@ export interface FileRoutesByTo {
   '/backlog': typeof BacklogRoute
   '/discover': typeof DiscoverRoute
   '/login': typeof LoginRoute
+  '/privacy': typeof PrivacyRoute
   '/profile': typeof ProfileRoute
   '/settings': typeof SettingsRoute
   '/signup': typeof SignupRoute
+  '/terms': typeof TermsRoute
   '/game/$id': typeof GameIdRoute
 }
 export interface FileRoutesById {
@@ -94,9 +110,11 @@ export interface FileRoutesById {
   '/backlog': typeof BacklogRoute
   '/discover': typeof DiscoverRoute
   '/login': typeof LoginRoute
+  '/privacy': typeof PrivacyRoute
   '/profile': typeof ProfileRoute
   '/settings': typeof SettingsRoute
   '/signup': typeof SignupRoute
+  '/terms': typeof TermsRoute
   '/game/$id': typeof GameIdRoute
 }
 export interface FileRouteTypes {
@@ -107,9 +125,11 @@ export interface FileRouteTypes {
     | '/backlog'
     | '/discover'
     | '/login'
+    | '/privacy'
     | '/profile'
     | '/settings'
     | '/signup'
+    | '/terms'
     | '/game/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -118,9 +138,11 @@ export interface FileRouteTypes {
     | '/backlog'
     | '/discover'
     | '/login'
+    | '/privacy'
     | '/profile'
     | '/settings'
     | '/signup'
+    | '/terms'
     | '/game/$id'
   id:
     | '__root__'
@@ -129,9 +151,11 @@ export interface FileRouteTypes {
     | '/backlog'
     | '/discover'
     | '/login'
+    | '/privacy'
     | '/profile'
     | '/settings'
     | '/signup'
+    | '/terms'
     | '/game/$id'
   fileRoutesById: FileRoutesById
 }
@@ -141,9 +165,11 @@ export interface RootRouteChildren {
   BacklogRoute: typeof BacklogRoute
   DiscoverRoute: typeof DiscoverRoute
   LoginRoute: typeof LoginRoute
+  PrivacyRoute: typeof PrivacyRoute
   ProfileRoute: typeof ProfileRoute
   SettingsRoute: typeof SettingsRoute
   SignupRoute: typeof SignupRoute
+  TermsRoute: typeof TermsRoute
   GameIdRoute: typeof GameIdRoute
 }
 
@@ -184,6 +210,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/profile': {
       id: '/profile'
       path: '/profile'
@@ -205,6 +238,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SignupRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/game/$id': {
       id: '/game/$id'
       path: '/game/$id'
@@ -221,11 +261,23 @@ const rootRouteChildren: RootRouteChildren = {
   BacklogRoute: BacklogRoute,
   DiscoverRoute: DiscoverRoute,
   LoginRoute: LoginRoute,
+  PrivacyRoute: PrivacyRoute,
   ProfileRoute: ProfileRoute,
   SettingsRoute: SettingsRoute,
   SignupRoute: SignupRoute,
+  TermsRoute: TermsRoute,
   GameIdRoute: GameIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
