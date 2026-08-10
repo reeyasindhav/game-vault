@@ -75,7 +75,7 @@ function GameDetail() {
           <p className="mt-4 text-xl leading-relaxed text-muted-foreground">{game.long}</p>
 
           <div className="mt-6 flex flex-wrap gap-2">
-            {game.tags.map((t) => (
+            {game.tags.map((t: string) => (
               <span
                 key={t}
                 className="rounded-full border border-border px-3 py-1.5 text-xs text-muted-foreground"

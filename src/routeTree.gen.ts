@@ -14,7 +14,10 @@ import { Route as ActivityRouteImport } from './routes/activity'
 import { Route as BacklogRouteImport } from './routes/backlog'
 import { Route as DiscoverRouteImport } from './routes/discover'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SignupRouteImport } from './routes/signup'
+import { Route as GameIdRouteImport } from './routes/game.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -41,9 +44,24 @@ const LoginRoute = LoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
   path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GameIdRoute = GameIdRouteImport.update({
+  id: '/game/$id',
+  path: '/game/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -53,7 +71,10 @@ export interface FileRoutesByFullPath {
   '/backlog': typeof BacklogRoute
   '/discover': typeof DiscoverRoute
   '/login': typeof LoginRoute
+  '/profile': typeof ProfileRoute
+  '/settings': typeof SettingsRoute
   '/signup': typeof SignupRoute
+  '/game/$id': typeof GameIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -61,7 +82,10 @@ export interface FileRoutesByTo {
   '/backlog': typeof BacklogRoute
   '/discover': typeof DiscoverRoute
   '/login': typeof LoginRoute
+  '/profile': typeof ProfileRoute
+  '/settings': typeof SettingsRoute
   '/signup': typeof SignupRoute
+  '/game/$id': typeof GameIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -70,13 +94,34 @@ export interface FileRoutesById {
   '/backlog': typeof BacklogRoute
   '/discover': typeof DiscoverRoute
   '/login': typeof LoginRoute
+  '/profile': typeof ProfileRoute
+  '/settings': typeof SettingsRoute
   '/signup': typeof SignupRoute
+  '/game/$id': typeof GameIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/activity' | '/backlog' | '/discover' | '/login' | '/signup'
+  fullPaths:
+    | '/'
+    | '/activity'
+    | '/backlog'
+    | '/discover'
+    | '/login'
+    | '/profile'
+    | '/settings'
+    | '/signup'
+    | '/game/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/activity' | '/backlog' | '/discover' | '/login' | '/signup'
+  to:
+    | '/'
+    | '/activity'
+    | '/backlog'
+    | '/discover'
+    | '/login'
+    | '/profile'
+    | '/settings'
+    | '/signup'
+    | '/game/$id'
   id:
     | '__root__'
     | '/'
@@ -84,7 +129,10 @@ export interface FileRouteTypes {
     | '/backlog'
     | '/discover'
     | '/login'
+    | '/profile'
+    | '/settings'
     | '/signup'
+    | '/game/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -93,7 +141,10 @@ export interface RootRouteChildren {
   BacklogRoute: typeof BacklogRoute
   DiscoverRoute: typeof DiscoverRoute
   LoginRoute: typeof LoginRoute
+  ProfileRoute: typeof ProfileRoute
+  SettingsRoute: typeof SettingsRoute
   SignupRoute: typeof SignupRoute
+  GameIdRoute: typeof GameIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -133,11 +184,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/signup': {
       id: '/signup'
       path: '/signup'
       fullPath: '/signup'
       preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/game/$id': {
+      id: '/game/$id'
+      path: '/game/$id'
+      fullPath: '/game/$id'
+      preLoaderRoute: typeof GameIdRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -149,7 +221,10 @@ const rootRouteChildren: RootRouteChildren = {
   BacklogRoute: BacklogRoute,
   DiscoverRoute: DiscoverRoute,
   LoginRoute: LoginRoute,
+  ProfileRoute: ProfileRoute,
+  SettingsRoute: SettingsRoute,
   SignupRoute: SignupRoute,
+  GameIdRoute: GameIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
